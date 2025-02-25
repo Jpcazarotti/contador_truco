@@ -8,6 +8,69 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _placarNos = 0;
+  int _placarEles = 0;
+  int _vitoriasNos = 0;
+  int _vitoriasEles = 0;
+
+  void aumentarPontos(String grupo, int pontos) {
+    if (grupo == "Nós") {
+      setState(() {
+        _placarNos += pontos;
+        if (_placarNos >= 12) {
+          _placarNos = 0;
+          _placarEles = 0;
+          _vitoriasNos += 1;
+        }
+      });
+    }
+    if (grupo == "Eles") {
+      setState(() {
+        _placarEles += pontos;
+        if (_placarEles >= 12) {
+          _placarNos = 0;
+          _placarEles = 0;
+          _vitoriasEles += 1;
+        }
+      });
+    }
+  }
+
+  void diminuirPontos(String grupo) {
+    if (grupo == "Nós") {
+      setState(() {
+        _placarNos -= 1;
+        if (_placarNos <= 0) {
+          _placarNos = 0;
+        }
+      });
+    }
+    if (grupo == "Eles") {
+      setState(() {
+        _placarEles -= 1;
+        if (_placarEles <= 0) {
+          _placarEles = 0;
+        }
+      });
+    }
+  }
+
+  void novoPartida() {
+    setState(() {
+      _placarNos = 0;
+      _placarEles = 0;
+    });
+  }
+
+  void novoTorneio() {
+    setState(() {
+      _placarNos = 0;
+      _placarEles = 0;
+      _vitoriasNos = 0;
+      _vitoriasEles = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,41 +110,48 @@ class _HomePageState extends State<HomePage> {
                             color: const Color(0xFFFFFFDC),
                             border: Border.all(width: 1, color: Colors.black45),
                             borderRadius: BorderRadius.circular(10)),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            "1",
-                            style: TextStyle(
+                            _placarNos.toString(),
+                            style: const TextStyle(
                                 fontSize: 60, color: Color(0xffe22364)),
                             // textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffe5e5e5),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              width: 2, color: const Color(0xff707070)),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.45),
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
-                            )
-                          ],
-                        ),
-                        child: const Text(
-                          '-1',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF707070)),
+                      GestureDetector(
+                        onTap: () {
+                          diminuirPontos("Nós");
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffe5e5e5),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                width: 2, color: const Color(0xff707070)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 0, 0, 0.45),
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              )
+                            ],
+                          ),
+                          child: const Text(
+                            '-1',
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF707070)),
+                          ),
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          aumentarPontos("Nós", 1);
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff7d6b7d),
                             minimumSize: const Size(120, 60),
@@ -98,7 +168,9 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            aumentarPontos("Nós", 3);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff7d6b7d),
                               minimumSize: const Size(120, 60),
@@ -115,7 +187,9 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            aumentarPontos("Nós", 6);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff7d6b7d),
                               minimumSize: const Size(120, 60),
@@ -153,41 +227,48 @@ class _HomePageState extends State<HomePage> {
                             color: const Color(0xFFFFFFDC),
                             border: Border.all(width: 1, color: Colors.black45),
                             borderRadius: BorderRadius.circular(10)),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            "6",
-                            style: TextStyle(
+                            _placarEles.toString(),
+                            style: const TextStyle(
                                 fontSize: 60, color: Color(0xffe22364)),
                             // textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffe5e5e5),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              width: 2, color: const Color(0xff707070)),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.45),
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: const Text(
-                          '-1',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF707070)),
+                      GestureDetector(
+                        onTap: () {
+                          diminuirPontos("Eles");
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffe5e5e5),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                width: 2, color: const Color(0xff707070)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 0, 0, 0.45),
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: const Text(
+                            '-1',
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF707070)),
+                          ),
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          aumentarPontos("Eles", 1);
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff7d6b7d),
                             minimumSize: const Size(120, 60),
@@ -204,7 +285,9 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            aumentarPontos("Eles", 3);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff7d6b7d),
                               minimumSize: const Size(120, 60),
@@ -221,7 +304,9 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            aumentarPontos("Eles", 6);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff7d6b7d),
                               minimumSize: const Size(120, 60),
@@ -246,22 +331,22 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10),
               child: Image.asset('assets/banner-cartas.png'),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10),
+            Padding(
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "1",
-                    style: TextStyle(
+                    _vitoriasNos.toString(),
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Color(0xffe22364)),
                   ),
-                  Text(
+                  const Text(
                     "Vitórias",
                     style: TextStyle(
                         fontSize: 30,
@@ -269,13 +354,13 @@ class _HomePageState extends State<HomePage> {
                         color: Color(0xff7d6b7d)),
                   ),
                   Text(
-                    "1",
-                    style: TextStyle(
+                    _vitoriasEles.toString(),
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Color(0xffe22364)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                 ],
@@ -289,7 +374,9 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            novoPartida();
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff7d6b7d),
                             minimumSize: const Size(0, 60),
@@ -313,7 +400,9 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            novoTorneio();
+                          },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(0, 60),
                             shape: RoundedRectangleBorder(
