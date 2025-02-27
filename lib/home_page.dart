@@ -1,3 +1,4 @@
+import 'package:contador_truco/vitoria_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,9 +19,15 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _placarNos += pontos;
         if (_placarNos >= 12) {
-          _placarNos = 0;
-          _placarEles = 0;
-          _vitoriasNos += 1;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const VitoriaPage(
+                  nomeGrupo: "Nós Vencemos",
+                ),
+              ));
+          _vitoriasNos++;
+          novaPartida();
         }
       });
     }
@@ -28,9 +35,15 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _placarEles += pontos;
         if (_placarEles >= 12) {
-          _placarNos = 0;
-          _placarEles = 0;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const VitoriaPage(
+                  nomeGrupo: "Eles Venceram",
+                ),
+              ));
           _vitoriasEles += 1;
+          novaPartida();
         }
       });
     }
@@ -55,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void novoPartida() {
+  void novaPartida() {
     setState(() {
       _placarNos = 0;
       _placarEles = 0;
@@ -375,7 +388,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(left: 10),
                       child: ElevatedButton(
                           onPressed: () {
-                            novoPartida();
+                            novaPartida();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff7d6b7d),

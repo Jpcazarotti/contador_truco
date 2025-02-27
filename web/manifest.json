@@ -1,6 +1,6 @@
 {
-    "name": "contador_truco",
-    "short_name": "contador_truco",
+    "name": "Contador de Truco",
+    "short_name": "Contador de Truco",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
